@@ -1,10 +1,7 @@
-FROM base/archlinux
+FROM archimg/base-devel
 
 # Update packages.
 RUN pacman -Syu --noconfirm
-
-# Install base-devel.
-RUN pacman -S --needed --noconfirm base-devel
 
 # Clear cache.
 RUN pacman -Scc --noconfirm
