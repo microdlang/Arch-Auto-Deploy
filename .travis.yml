@@ -1,6 +1,9 @@
 services:
   - docker
 
+env:
+  - TRAVIS_TAG=repository
+
 before_install:
   - docker build -t localnet/aurutilsci .
   - docker run -d -t --name aurutilsci localnet/aurutilsci bash
@@ -26,7 +29,7 @@ deploy:
   overwrite: true
   skip_cleanup: true
   on:
-    tags: true
+    branch: master
 
 notifications:
   email: false
