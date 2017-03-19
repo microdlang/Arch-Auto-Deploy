@@ -2,9 +2,12 @@
 
 set -ex
 
+# Environment variables.
+export PACKAGER="Admin Localnet"
+
 # Build package.
 cd "src"
-makepkg -sr --noconfirm
+makepkg -Lcrs --noconfirm
 cd ".."
 
 cp "src/aurutils-"*".pkg.tar.xz" "bin"
