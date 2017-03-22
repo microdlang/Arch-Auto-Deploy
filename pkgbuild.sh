@@ -3,7 +3,7 @@
 set -ex
 
 # Environment variables.
-export PACKAGER="Admin Localnet"
+export PACKAGER="${1}"
 
 # Build package.
 cd "src"

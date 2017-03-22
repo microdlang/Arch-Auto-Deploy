@@ -16,7 +16,7 @@ before_script:
   - docker cp pkgbuild.sh aurutilsci:/home/pkguser
 
 script:
-  - docker exec aurutilsci bash pkgbuild.sh
+  - docker exec aurutilsci bash pkgbuild.sh ${USER}
 
 before_deploy:
   - docker cp aurutilsci:/home/pkguser/bin repository
