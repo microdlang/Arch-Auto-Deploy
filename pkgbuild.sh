@@ -3,7 +3,7 @@
 set -ex
 
 # Environment variables.
-export PACKAGER="${1}"
+export PACKAGER="https://travis-ci.org/${1}/builds/${2}"
 
 # Build package.
 cd "src"
