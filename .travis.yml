@@ -1,9 +1,6 @@
 services:
   - docker
 
-env:
-  - TRAVIS_TAG=repository
-
 before_install:
   - docker build -t localnet/aurutilsci .
   - docker run -d -t --name aurutilsci localnet/aurutilsci bash
@@ -19,13 +16,13 @@ script:
   - docker exec aurutilsci bash pkgbuild.sh ${TRAVIS_REPO_SLUG} ${TRAVIS_BUILD_ID}
 
 before_deploy:
-  - docker cp aurutilsci:/home/pkguser/bin repository
+  - docker cp aurutilsci:/home/pkguser/bin ${TRAVIS_TAG}
 
 deploy:
   provider: releases
   api_key: ${GITHUB_TOKEN}
   file_glob: true
-  file: repository/*{db,files,gz,xz}
+  file: ${TRAVIS_TAG}/*{db,files,gz,xz}
   overwrite: true
   skip_cleanup: true
   on:
