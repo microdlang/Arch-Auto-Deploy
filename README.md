@@ -19,4 +19,4 @@ pacman -Sy              # Refresh package database.
 pacman -Sl aurutilsci   # Show packages in repository.
 ```
 
-**NOTE:** Only one package in repository, aurutils.
+**NOTE:** Only one package in repository, [aurutils](https://aur.archlinux.org/packages/aurutils).
