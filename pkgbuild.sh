@@ -5,6 +5,9 @@ set -ex
 # Environment variables.
 export PACKAGER="https://travis-ci.org/${1}/builds/${2}"
 
+# Variables declaration.
+declare pkgrepo="${1#*/}"
+
 # Build package.
 cd "src"
 makepkg -Lcrs --noconfirm
@@ -14,7 +17,7 @@ cp "src/aurutils-"*".pkg.tar.xz" "bin"
 
 # Add package to repository.
 cd "bin"
-repo-add "aurutilsci.db.tar.gz" "aurutils-"*".pkg.tar.xz"
+repo-add "${pkgrepo}.db.tar.gz" "aurutils-"*".pkg.tar.xz"
 cd ".."
 
 { set +ex; } 2>/dev/null
