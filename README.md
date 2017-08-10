@@ -4,7 +4,7 @@ Use [Travis CI](https://travis-ci.org/localnet/aurutilsci) for building and pack
 
 ## Use repository
 
-To use as custom repository in Arch Linux, add to file `/etc/pacman.conf`:
+To use as custom repository in [Arch Linux](https://www.archlinux.org), add to file `/etc/pacman.conf`:
 
 ```
 [aurutilsci]
@@ -17,6 +17,7 @@ Then on the command line:
 ```
 pacman -Sy              # Refresh package database.
 pacman -Sl aurutilsci   # Show packages in repository.
+pacman -S {package}     # Install a package.
 ```
 
-**NOTE:** Only one package in repository, [aurutils](https://aur.archlinux.org/packages/aurutils).
+**NOTE:** Only one package in repository is aurutils.
