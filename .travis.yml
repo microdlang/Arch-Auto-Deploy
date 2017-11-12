@@ -9,6 +9,9 @@ install:
 before_script:
   - docker cp aurutils/.SRCINFO aurutilsci:/home/pkguser/src
   - docker cp aurutils/PKGBUILD aurutilsci:/home/pkguser/src
+  - docker cp aurutils/0001-aurbuild-backport-fix-for-236.patch aurutilsci:/home/pkguser/src
+  - docker cp aurutils/0002-aurbuild-disable-verbose-signing.patch aurutilsci:/home/pkguser/src
+  - docker cp aurutils/0003-aursync-1-r-is-not-a-default-option.patch aurutilsci:/home/pkguser/src
 script:
   - docker exec aurutilsci bash pkgbuild.sh ${TRAVIS_REPO_SLUG} ${TRAVIS_BUILD_ID}
 before_deploy:
