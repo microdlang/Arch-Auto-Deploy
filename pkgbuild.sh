@@ -6,7 +6,7 @@ set -ex
 export PACKAGER="https://travis-ci.org/${1}/builds/${2}"
 
 # Variables declaration.
-declare pkgrepo="${1#*/}"
+declare -r pkgrepo="${1#*/}"
 
 # Build package.
 cd "src"
