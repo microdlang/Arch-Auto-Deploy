@@ -7,18 +7,14 @@ before_install:
 install:
   - docker cp pkgbuild.sh aurutilsci:/home/pkguser
 before_script:
-  - docker cp aurutils/.SRCINFO aurutilsci:/home/pkguser/src
-  - docker cp aurutils/PKGBUILD aurutilsci:/home/pkguser/src
-  - docker cp aurutils/0001-aurbuild-backport-fix-for-236.patch aurutilsci:/home/pkguser/src
-  - docker cp aurutils/0002-aurbuild-disable-verbose-signing.patch aurutilsci:/home/pkguser/src
-  - docker cp aurutils/0003-aursync-1-r-is-not-a-default-option.patch aurutilsci:/home/pkguser/src
+  - docker exec aurutilsci curl -L -O -f https://aur.archlinux.org/cgit/aur.git/snapshot/aurutils.tar.gz
 script:
-  - docker exec aurutilsci bash pkgbuild.sh ${TRAVIS_REPO_SLUG} ${TRAVIS_BUILD_ID}
+  - docker exec aurutilsci bash pkgbuild.sh $TRAVIS_REPO_SLUG $TRAVIS_BUILD_ID
 before_deploy:
-  - docker cp aurutilsci:/home/pkguser/bin ${TRAVIS_TAG}
+  - docker cp aurutilsci:/home/pkguser/bin $TRAVIS_TAG
 deploy:
   provider: releases
-  api_key: ${GITHUB_TOKEN}
+  api_key: $GITHUB_TOKEN
   file_glob: true
   file: ${TRAVIS_TAG}/*{db,files,gz,xz}
   overwrite: true

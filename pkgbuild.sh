@@ -7,9 +7,13 @@ export PACKAGER="https://travis-ci.org/${1}/builds/${2}"
 
 # Variables declaration.
 declare -r pkgrepo="${1#*/}"
+declare -r pkgkey="DBE7D3DD8C81D58D0A13D0E76BC26A17B9B7018A"
 
 # Import GPG key.
-gpg --recv-keys DBE7D3DD8C81D58D0A13D0E76BC26A17B9B7018A
+gpg --recv-keys --keyserver hkp://pool.sks-keyservers.net $pkgkey
+
+# Extract snapshot.
+tar -xf "aurutils.tar.gz" --strip 1 -C "src"
 
 # Build package.
 cd "src"
