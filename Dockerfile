@@ -4,7 +4,7 @@ FROM archlinux/base
 RUN pacman -Syu --noconfirm
 
 # Install base-devel group.
-RUN pacman -S --noconfirm base-devel
+RUN pacman -S --needed --noconfirm base-devel
 
 # Clear cache.
 RUN pacman -Scc --noconfirm
