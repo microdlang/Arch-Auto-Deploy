@@ -56,7 +56,7 @@ build() {
     make
 }
 
-package_ldc() {
+package() {
     depends=('llvm-libs' 'gcc' 'compiler-rt')
 
     cd "$srcdir/ldc/build"
