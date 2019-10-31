@@ -1,0 +1,68 @@
+# Maintainer:
+# Contributor: Ernesto Castellotti <erny.castell@gmail.com>
+# Contributor: Mihails Strasuns <public@dicebot.lv>
+# Contributor: Sven-Hendrik Haase <sh@lutzhaase.com>
+
+pkgname=('microd-ldc')
+pkgver=1.17.0
+_clangversion=9.0.0 # related to where ldc2 looks for compiler-rt sanitizers
+pkgrel=1
+pkgdesc="Pay-as-you-go language designed for system programming, based on DLang"
+arch=('x86_64')
+url="https://github.com/microdlang/ldc"
+license=('BSD')
+makedepends=('git' 'cmake' 'llvm' 'ldc')
+
+source=(
+    "git+https://github.com/ldc-developers/ldc#commit=$_pkgcommit"
+    "git+https://github.com/ldc-developers/dmd-testsuite.git"
+)
+
+sha256sums=('SKIP'
+            'SKIP')
+
+prepare() {
+    cd "$srcdir/ldc"
+
+    git submodule init
+    git config submodule.tests/d2/dmd-testsuite.url "$srcdir/dmd-testsuite"
+    git submodule update
+
+    # Set version used for path construction in getFullClangCompilerRTLibPath()
+    sed -i "s/ldc::llvm_version_base/\"$_clangversion\"/" driver/linker-gcc.cpp
+
+    # LLVM 9 compatibility fixes
+    git cherry-pick -n 030123410a 0ab79c1950 c25614eb6b 29436882e8
+    # https://github.com/ldc-developers/ldc/issues/3079
+    sed -i '/FileCheck/,$d' utils/CMakeLists.txt
+}
+
+build() {
+    cd "$srcdir/ldc"
+
+    mkdir -p build && cd build
+
+    cmake \
+    -DCMAKE_INSTALL_PREFIX=/usr/microd \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_SKIP_RPATH=ON \
+    -DINCLUDE_INSTALL_DIR=/usr/microd/include/ldc \
+    -DBUILD_SHARED_LIBS=BOTH \
+    -DBUILD_LTO_LIBS=ON \
+    -DLDC_WITH_LLD=OFF \
+    -DD_COMPILER_FLAGS="-link-defaultlib-shared=false -linker=gold -flto=full" \
+    -DADDITIONAL_DEFAULT_LDC_SWITCHES="\"-link-defaultlib-shared\"" \
+    ..
+    make
+}
+
+package_ldc() {
+    depends=('llvm-libs' 'gcc' 'compiler-rt')
+
+    cd "$srcdir/ldc/build"
+    make install DESTDIR="$pkgdir"
+
+    # licenses
+    install -D -m644 "$srcdir/ldc/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
+
