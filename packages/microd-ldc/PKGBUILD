@@ -4,8 +4,7 @@
 # Contributor: Sven-Hendrik Haase <sh@lutzhaase.com>
 
 pkgname=('microd-ldc')
-pkgver=1.17.0
-_clangversion=9.0.0 # related to where ldc2 looks for compiler-rt sanitizers
+pkgver=1.18.0
 pkgrel=1
 pkgdesc="Pay-as-you-go language designed for system programming, based on DLang"
 arch=('x86_64')
@@ -14,7 +13,7 @@ license=('BSD')
 makedepends=('git' 'cmake' 'llvm' 'ldc')
 
 source=(
-    "git+https://github.com/ldc-developers/ldc#commit=$_pkgcommit"
+    "git+https://github.com/microdlang/ldc"
     "git+https://github.com/ldc-developers/dmd-testsuite.git"
 )
 
