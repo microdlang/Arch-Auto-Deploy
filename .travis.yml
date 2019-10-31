@@ -8,6 +8,8 @@ before_install:
   - docker run -d -t --name arch-auto-deploy microdlang/arch-auto-deploy bash
 install:
   - docker cp pkgbuild.sh arch-auto-deploy:/home/pkguser
+before_script:
+  - docker cp packages arch-auto-deploy:/home/pkguser/packages
 script:
   - docker exec arch-auto-deploy bash pkgbuild.sh $TRAVIS_REPO_SLUG $TRAVIS_BUILD_ID
 before_deploy:
