@@ -4,16 +4,14 @@ env:
 services:
   - docker
 before_install:
-  - docker build -t localnet/aurutilsci .
-  - docker run -d -t --name aurutilsci localnet/aurutilsci bash
+  - docker build -t microdlang/arch-auto-deploy .
+  - docker run -d -t --name arch-auto-deploy microdlang/arch-auto-deploy bash
 install:
-  - docker cp pkgbuild.sh aurutilsci:/home/pkguser
-before_script:
-  - docker exec aurutilsci curl -L -O -f https://aur.archlinux.org/cgit/aur.git/snapshot/aurutils.tar.gz
+  - docker cp pkgbuild.sh arch-auto-deploy:/home/pkguser
 script:
-  - docker exec aurutilsci bash pkgbuild.sh $TRAVIS_REPO_SLUG $TRAVIS_BUILD_ID
+  - docker exec arch-auto-deploy bash pkgbuild.sh $TRAVIS_REPO_SLUG $TRAVIS_BUILD_ID
 before_deploy:
-  - docker cp aurutilsci:/home/pkguser/bin $TRAVIS_TAG
+  - docker cp arch-auto-deploy:/home/pkguser/bin $TRAVIS_TAG
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
