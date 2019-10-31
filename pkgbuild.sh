@@ -9,6 +9,7 @@ export PACKAGER="https://travis-ci.org/${1}/builds/${2}"
 declare -r pkgrepo="${1#*/}"
 
 # Build packages.
+sudo chown -R pkguser:pkguser packages
 cd "packages"
 
 for dir in */; do
